@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dairy Dash!</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    canvas {
+      display: block;
+      border: 1px solid #ccc;
+    }
+    audio {
+      display: none; /* Hide the audio elements */
+    }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<audio id="backgroundMusic" loop>
+  <source src="assets/sounds/background.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<audio id="collisionSound">
+  <source src="assets/sounds/collision.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<script src="script.js"></script>
+</body>
+</html>
