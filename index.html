@@ -9,19 +9,31 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-color: #f0f0f0;
+      /*background-color: #f0f0f0;*/
     }
     canvas {
       display: block;
       border: 1px solid #ccc;
+      position: relative; /* Needed for absolute positioning of GIF */
     }
     audio {
-      display: none; /* Hide the audio elements */
+      display: none;
+    }
+    #gameOverGif {
+      position: absolute;
+      top: 0; /* Align to the top */
+      left: 0; /* Align to the left */
+      width: 100%; /* Make it take the full width of its container (the canvas) */
+      height: 100%; /* Make it take the full height of its container (the canvas) */
+      display: none; /* Initially hidden */
+      z-index: -1; /* Ensure it's on top of the canvas */
+      object-fit: cover; /* Maintain aspect ratio and cover the entire area */
     }
   </style>
 </head>
 <body>
 <canvas id="gameCanvas"></canvas>
+<img id="gameOverGif" src="assets/images/game_over.gif" alt="Game Over">
 <audio id="backgroundMusic" loop>
   <source src="assets/sounds/background.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
