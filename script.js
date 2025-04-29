@@ -1,19 +1,17 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const gameOverGifElement = document.getElementById('gameOverGif'); // Get the GIF element
 
 // Set canvas dimensions
 canvas.width = 800;
 canvas.height = 400;
 
-// Load images
+// Load images (remove gameOverImage loading)
 const cowImage = new Image();
 cowImage.src = 'assets/images/cow.png'; // Adjust path if needed
 
 const bugImage = new Image();
 bugImage.src = 'assets/images/bug.png'; // Adjust path if needed
-
-const gameOverImage = new Image();
-gameOverImage.src = 'assets/images/game_over.jpeg'; // Adjust path if needed
 
 // Cow properties
 const cow = {
@@ -54,6 +52,7 @@ function startGame() {
     gameStarted = true;
     backgroundMusic.currentTime = 0; // Reset music to start
     backgroundMusic.play(); // Start playing the music
+    gameOverGifElement.style.display = 'none'; // Ensure GIF is hidden on restart
 }
 
 function spawnObstacle() {
@@ -150,17 +149,16 @@ function draw() {
         ctx.fillText(startText, textX, textY);
     }
 
-    // Draw game over image
+    // Control visibility of the GIF and draw game over text on canvas
     if (gameOver) {
-        const imageX = (canvas.width - gameOverImage.width) / 2;
-        const imageY = (canvas.height - gameOverImage.height) / 2;
-        ctx.drawImage(gameOverImage, imageX, imageY);
+        gameOverGifElement.style.display = 'block'; // Show the GIF
+
         ctx.fillStyle = 'black';
         ctx.font = '30px Arial';
         const gameOverText = 'Game Over! Score: ' + Math.floor(score);
         const gameOverTextWidth = ctx.measureText(gameOverText).width;
         const gameOverTextX = (canvas.width - gameOverTextWidth) / 2;
-        const gameOverTextY = imageY + gameOverImage.height + 40; // Position below the image
+        const gameOverTextY = canvas.height / 2 + 80; // Position below the GIF (adjust as needed)
         ctx.fillText(gameOverText, gameOverTextX, gameOverTextY);
 
         ctx.font = '20px Arial';
@@ -169,6 +167,8 @@ function draw() {
         const restartTextX = (canvas.width - restartTextWidth) / 2;
         const restartTextY = gameOverTextY + 30;
         ctx.fillText(restartText, restartTextX, restartTextY);
+    } else {
+        gameOverGifElement.style.display = 'none'; // Hide the GIF when not game over
     }
 }
 
@@ -197,8 +197,6 @@ document.addEventListener('keydown', (event) => {
     if (gameStarted && !gameOver) {
         if (event.code === 'ArrowUp') {
             cow.verticalSpeed = cow.jumpStrength;
-        } else if (event.code === 'ArrowDown') {
-            cow.verticalSpeed = Math.abs(cow.jumpStrength);
         }
     }
 });
